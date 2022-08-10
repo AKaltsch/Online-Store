@@ -29,15 +29,10 @@ router.post(
     check("email")
       .isEmail()
       .withMessage("Please enter a valid email.")
-      // Example of how to make a custom validator
       .custom((value, { req }) => {
-        // if (value === "test@test.com") {
-        //   throw new Error("This is not a real email!!");
-        // }
-        // return true;
-        // // // this is how we add our own async validation
+        // this is how we add our own async validation
         // // if we return a promise, then express-validator will wait for the promise to be fulfilled
-        return User.findOne({ email: email }).then((userDoc) => {
+        return User.findOne({ email: value }).then((userDoc) => {
           if (userDoc) {
             return Promise.reject(
               "E-mail already exists, please pick a different one."

@@ -44,6 +44,11 @@ exports.getSignup = (req, res, next) => {
     path: "/signup",
     pageTitle: "Signup",
     errorMessage: message,
+    oldInput: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 };
 
@@ -101,11 +106,17 @@ exports.postSignup = (req, res, next) => {
   // checks validation from the route
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    // console.log(errors.array());
+    console.log(email);
+    console.log(errors);
     return res.status(422).render("auth/signup", {
       path: "/signup",
       pageTitle: "Signup",
       errorMessage: errors.array()[0].msg,
+      oldInput: {
+        email: email,
+        password: password,
+        confirmPassword: req.body.confirmPassword,
+      },
     });
   }
   // code is no longer needed bc we are checking for users existance in the route validator
