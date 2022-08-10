@@ -34,7 +34,7 @@ exports.postAddProduct = (req, res, next) => {
         description: description,
       },
       errorMessage: errors.array()[0].msg,
-      validationErrors: errors.arrayt(),
+      validationErrors: errors.array(),
     });
   }
 
@@ -110,7 +110,7 @@ exports.postEditProduct = (req, res, next) => {
 
   Product.findById(prodId)
     .then((product) => {
-      if (product.id.toString() !== req.user._id.toString()) {
+      if (product.userId.toString() !== req.user._id.toString()) {
         return res.redirect("/");
       }
       product.title = updatedTitle;
